@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Sovereign Grid Initiative</title>
+  <meta name="description" content="Power is the bottleneck to everything America needs to accomplish in the next decade. The Sovereign Grid Initiative exists to change that.">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --charcoal: #141414;
+      --charcoal-mid: #1e1e1e;
+      --gold: #C9A84C;
+      --gold-light: #E2C47A;
+      --gold-dim: #8a6f33;
+      --white: #f5f2ec;
+      --muted: #888880;
+      --serif: 'Cormorant Garamond', Georgia, serif;
+      --sans: 'Barlow', sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--charcoal); color: var(--white); font-family: var(--sans); font-weight: 300; line-height: 1.7; overflow-x: hidden; }
+
+    /* NAV */
+    nav { display: flex; justify-content: space-between; align-items: center; padding: 22px 48px; border-bottom: 0.5px solid rgba(201,168,76,0.2); position: sticky; top: 0; background: rgba(20,20,20,0.97); backdrop-filter: blur(8px); z-index: 100; }
+    .nav-logo-wrap { display: flex; flex-direction: column; }
+    .nav-logo { font-family: var(--serif); font-size: 20px; font-weight: 600; color: var(--gold); letter-spacing: 0.04em; line-height: 1.1; }
+    .nav-tagline { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-top: 2px; }
+    .nav-links { display: flex; gap: 36px; list-style: none; }
+    .nav-links a { font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--gold); }
+
+    /* BUTTONS */
+    .btn-primary { display: inline-flex; align-items: center; font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--charcoal); background: var(--gold); padding: 13px 28px; text-decoration: none; transition: background 0.2s; cursor: pointer; border: none; font-family: var(--sans); }
+    .btn-primary:hover { background: var(--gold-light); }
+    .btn-ghost { display: inline-flex; align-items: center; font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); border: 0.5px solid var(--gold-dim); padding: 13px 28px; text-decoration: none; margin-left: 14px; transition: border-color 0.2s, color 0.2s; cursor: pointer; background: none; font-family: var(--sans); }
+    .btn-ghost:hover { border-color: var(--gold); color: var(--gold-light); }
+
+    /* HERO */
+    .hero { padding: 80px 48px 72px; position: relative; overflow: hidden; }
+    .hero::before { content: ''; position: absolute; top: -120px; right: -120px; width: 600px; height: 600px; background: radial-gradient(circle, rgba(201,168,76,0.07) 0%, transparent 70%); pointer-events: none; }
+    .hero::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px; background: linear-gradient(to right, transparent, rgba(201,168,76,0.3), transparent); }
+    .hero-kicker { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 24px; display: flex; align-items: center; gap: 12px; }
+    .hero-kicker::before { content: ''; width: 32px; height: 1px; background: var(--gold); }
+    .hero-headline { font-family: var(--serif); font-size: clamp(36px, 5vw, 64px); font-weight: 300; line-height: 1.15; max-width: 800px; color: var(--white); margin-bottom: 24px; }
+    .hero-headline em { font-style: italic; color: var(--gold-light); }
+    .hero-sub { font-size: 15px; color: var(--muted); max-width: 580px; line-height: 1.9; margin-bottom: 40px; }
+    .hero-cta-wrap { display: flex; align-items: center; flex-wrap: wrap; gap: 0; }
+
+    /* STAKES BAR */
+    .stakes { background: var(--charcoal-mid); border-top: 0.5px solid rgba(201,168,76,0.15); border-bottom: 0.5px solid rgba(201,168,76,0.15); display: grid; grid-template-columns: repeat(4, 1fr); }
+    .stake { padding: 28px 32px; border-right: 0.5px solid rgba(201,168,76,0.1); }
+    .stake:last-child { border-right: none; }
+    .stake-tag { display: inline-block; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); border: 0.5px solid var(--gold-dim); padding: 2px 8px; margin-bottom: 10px; }
+    .stake-headline { font-family: var(--serif); font-size: 15px; font-weight: 600; color: var(--white); margin-bottom: 6px; line-height: 1.3; }
+    .stake-sub { font-size: 12px; color: var(--muted); line-height: 1.6; }
+
+    /* SHARED SECTION STYLES */
+    .section { padding: 80px 48px; }
+    .section-label { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; display: flex; align-items: center; gap: 12px; }
+    .section-label::before { content: ''; width: 24px; height: 1px; background: var(--gold); }
+    .section-title { font-family: var(--serif); font-size: clamp(28px, 3.5vw, 48px); font-weight: 300; line-height: 1.2; max-width: 640px; margin-bottom: 16px; }
+    .section-body { font-size: 14px; color: var(--muted); max-width: 560px; line-height: 1.9; margin-bottom: 52px; }
+
+    /* PILLARS */
+    .pillars-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: rgba(201,168,76,0.12); border: 0.5px solid rgba(201,168,76,0.12); }
+    .pillar { background: var(--charcoal); padding: 44px; position: relative; transition: background 0.3s; }
+    .pillar:hover { background: var(--charcoal-mid); }
+    .pillar-accent { position: absolute; top: 0; left: 44px; width: 28px; height: 2px; background: var(--gold); }
+    .pillar-number { font-family: var(--serif); font-size: 56px; font-weight: 300; color: rgba(201,168,76,0.12); line-height: 1; margin-bottom: 14px; transition: color 0.3s; }
+    .pillar:hover .pillar-number { color: rgba(201,168,76,0.28); }
+    .pillar-title { font-family: var(--serif); font-size: 22px; font-weight: 400; color: var(--white); margin-bottom: 14px; line-height: 1.3; }
+    .pillar-text { font-size: 13px; color: var(--muted); line-height: 1.9; }
+
+    /* VISION */
+    .vision-section { background: var(--charcoal-mid); border-top: 0.5px solid rgba(201,168,76,0.15); border-bottom: 0.5px solid rgba(201,168,76,0.15); }
+    .vision-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: start; }
+    .vision-quote { font-family: var(--serif); font-size: 22px; font-weight: 300; line-height: 1.7; color: var(--white); border-left: 2px solid var(--gold); padding-left: 28px; font-style: italic; margin-bottom: 24px; }
+    .vision-body { font-size: 13px; color: var(--muted); line-height: 1.9; }
+    .vision-list { list-style: none; display: flex; flex-direction: column; gap: 20px; }
+    .vision-list li { display: flex; gap: 16px; align-items: flex-start; font-size: 13px; color: var(--muted); line-height: 1.7; }
+    .vision-list li strong { color: var(--white); font-weight: 500; display: block; margin-bottom: 2px; }
+    .vision-list li::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--gold); flex-shrink: 0; margin-top: 7px; }
+
+    /* MAP SECTION */
+    .map-section { background: var(--charcoal); padding: 80px 48px; }
+    .map-section .section-body { margin-bottom: 32px; }
+    #map-container { width: 100%; background: rgba(30,30,30,0.8); border-radius: 8px; border: 0.5px solid rgba(201,168,76,0.2); overflow: hidden; }
+    #map-container svg { width: 100%; height: auto; display: block; }
+    .state-path { stroke: #141414; stroke-width: 0.5; cursor: pointer; transition: opacity 0.15s; }
+    .state-path:hover { opacity: 0.75; stroke-width: 1.5; }
+    .map-legend { display: flex; flex-wrap: wrap; gap: 20px; margin-top: 20px; }
+    .map-legend-item { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--muted); }
+    .map-legend-dot { width: 12px; height: 12px; border-radius: 2px; flex-shrink: 0; }
+    .map-tooltip { position: fixed; background: #1a1a1a; border: 0.5px solid rgba(201,168,76,0.3); border-radius: 8px; padding: 12px 16px; font-size: 12px; pointer-events: none; display: none; max-width: 260px; z-index: 9999; font-family: var(--sans); }
+    .map-tt-name { font-size: 13px; font-weight: 500; color: var(--white); margin-bottom: 3px; }
+    .map-tt-zone { font-size: 11px; color: var(--muted); margin-bottom: 3px; }
+    .map-tt-risk { font-size: 11px; font-weight: 500; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.05em; }
+    .map-tt-detail { font-size: 11px; color: var(--muted); line-height: 1.5; }
+    .map-source { font-size: 11px; color: rgba(136,136,128,0.6); margin-top: 12px; }
+    .map-source a { color: rgba(201,168,76,0.5); text-decoration: none; }
+    .map-source a:hover { color: var(--gold); }
+
+    /* PROBLEM */
+    .problem-section { background: var(--charcoal-mid); border-top: 0.5px solid rgba(201,168,76,0.15); border-bottom: 0.5px solid rgba(201,168,76,0.15); }
+    .problem-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: start; }
+    .problem-quote { font-family: var(--serif); font-size: 22px; font-weight: 300; line-height: 1.7; color: var(--white); border-left: 2px solid var(--gold); padding-left: 28px; font-style: italic; }
+    .problem-list { list-style: none; display: flex; flex-direction: column; gap: 20px; }
+    .problem-list li { display: flex; gap: 14px; align-items: flex-start; font-size: 13px; color: var(--muted); line-height: 1.7; }
+    .problem-list li::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--gold); flex-shrink: 0; margin-top: 7px; }
+
+    /* CTA */
+    .cta-section { text-align: center; padding: 80px 48px; position: relative; overflow: hidden; }
+    .cta-section::before { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 700px; height: 350px; background: radial-gradient(ellipse, rgba(201,168,76,0.06) 0%, transparent 70%); pointer-events: none; }
+    .cta-section .section-title { margin: 0 auto 16px; text-align: center; }
+    .cta-section .section-body { margin: 0 auto 40px; text-align: center; }
+    .cta-buttons { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; }
+
+    /* FOOTER */
+    footer { border-top: 0.5px solid rgba(201,168,76,0.2); padding: 32px 48px; display: flex; justify-content: space-between; align-items: center; }
+    .footer-left { display: flex; flex-direction: column; }
+    .footer-logo { font-family: var(--serif); font-size: 17px; color: var(--gold-dim); }
+    .footer-sub { font-size: 10px; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 3px; }
+    .footer-note { font-size: 11px; color: var(--muted); }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    .hero-kicker { animation: fadeUp 0.5s ease both; }
+    .hero-headline { animation: fadeUp 0.5s 0.12s ease both; }
+    .hero-sub { animation: fadeUp 0.5s 0.24s ease both; }
+    .hero-cta-wrap { animation: fadeUp 0.5s 0.36s ease both; }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      nav { padding: 18px 24px; }
+      .nav-links { display: none; }
+      .hero { padding: 48px 24px; }
+      .stakes { grid-template-columns: 1fr 1fr; }
+      .section { padding: 56px 24px; }
+      .pillars-grid { grid-template-columns: 1fr; }
+      .vision-inner, .problem-inner { grid-template-columns: 1fr; gap: 40px; }
+      .map-section { padding: 56px 24px; }
+      .cta-section { padding: 56px 24px; }
+      footer { padding: 24px; flex-direction: column; gap: 16px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo-wrap">
+    <div class="nav-logo">The Sovereign Grid Initiative</div>
+    <div class="nav-tagline">Power · Chips · AI · National Security</div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#problem">The Problem</a></li>
+    <li><a href="#vision">The Vision</a></li>
+    <li><a href="#work">Our Work</a></li>
+    <li><a href="#map">The Map</a></li>
+    <li><a href="#brief">Brief</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-kicker">Power is the bottleneck to everything</div>
+  <h1 class="hero-headline">
+    America is trying to win<br>
+    four revolutions at once.<br>
+    <em>All of them run on power.</em>
+  </h1>
+  <p class="hero-sub">AI, defense modernization, manufacturing reshoring, and chip security are converging simultaneously on a grid that wasn't built for any of it. This is not four separate problems. It is one problem with four faces — and power is the thread running through all of them.</p>
+  <div class="hero-cta-wrap">
+    <a href="#brief" class="btn-primary">Read the Brief</a>
+    <a href="#contact" class="btn-ghost">Get Involved</a>
+  </div>
+</section>
+
+<!-- STAKES BAR -->
+<div class="stakes">
+  <div class="stake">
+    <div class="stake-tag">Grid</div>
+    <div class="stake-headline">More than half the US grid is at elevated or high risk of power shortfalls</div>
+    <div class="stake-sub">13 of 23 regional assessment areas flagged by federal reliability regulators</div>
+  </div>
+  <div class="stake">
+    <div class="stake-tag">Demand</div>
+    <div class="stake-headline">Power demand is surging faster than at any point in modern history</div>
+    <div class="stake-sub">AI data centers alone projected to add 224 GW of new demand by 2035</div>
+  </div>
+  <div class="stake">
+    <div class="stake-tag">Chips</div>
+    <div class="stake-headline">America's new chip factories are stalling — because the power isn't there</div>
+    <div class="stake-sub">CHIPS Act fabs facing construction delays due to grid capacity constraints</div>
+  </div>
+  <div class="stake">
+    <div class="stake-tag">Supply</div>
+    <div class="stake-headline">85% of new energy projects can't run when the grid needs them most</div>
+    <div class="stake-sub">The interconnection queue is dominated by solar and wind — not dispatchable baseload</div>
+  </div>
+</div>
+
+<!-- PILLARS -->
+<section id="work" class="section">
+  <div class="section-label">What We Do</div>
+  <h2 class="section-title">Four pillars. One mission.</h2>
+  <p class="section-body">Nobody is holding the full picture across power, chips, AI, and defense. The Sovereign Grid Initiative does — and acts on it.</p>
+  <div class="pillars-grid">
+    <div class="pillar">
+      <div class="pillar-accent"></div>
+      <div class="pillar-number">01</div>
+      <div class="pillar-title">Map the problem nobody has mapped</div>
+      <p class="pillar-text">Specific, credible analysis of power bottlenecks, regulatory chokepoints, and what each revolution actually needs — in real numbers. Not a vague warning. Actionable intelligence.</p>
+    </div>
+    <div class="pillar">
+      <div class="pillar-accent"></div>
+      <div class="pillar-number">02</div>
+      <div class="pillar-title">Hold the only neutral table</div>
+      <p class="pillar-text">Convene chip manufacturers, utilities, defense contractors, AI companies, and policymakers who are not currently in the same room. The value is the coordination itself.</p>
+    </div>
+    <div class="pillar">
+      <div class="pillar-accent"></div>
+      <div class="pillar-number">03</div>
+      <div class="pillar-title">Turn coordination into policy action</div>
+      <p class="pillar-text">Specific asks — faster nuclear permitting, fuel recycling reform, onsite power deregulation, grid hardening — pushed with one voice in a way no single industry can do alone.</p>
+    </div>
+    <div class="pillar">
+      <div class="pillar-accent"></div>
+      <div class="pillar-number">04</div>
+      <div class="pillar-title">Protect the public interest</div>
+      <p class="pillar-text">Policy shaped only by industry insiders serves only industry insiders. The payoff for solving this flows to every American — cheaper energy, cleaner water, stronger infrastructure, genuine independence.</p>
+    </div>
+  </div>
+</section>
+
+<!-- VISION -->
+<section id="vision" class="section vision-section">
+  <div class="vision-inner">
+    <div>
+      <div class="section-label">The Vision</div>
+      <blockquote class="vision-quote">"A modern abundant power grid is the interstate highway system of the 21st century."</blockquote>
+      <p class="vision-body">When Eisenhower built the interstate system the stated purpose was national defense. The second order effects were transformational — suburban growth, the trucking industry, economic integration across the country. Nobody could fully predict what abundant connected infrastructure would unlock. We are making the same bet for electricity.</p>
+    </div>
+    <ul class="vision-list">
+      <li><div><strong>Energy independence</strong>No more power prices spiking when a war breaks out in Iran or a regime changes in the Middle East</div></li>
+      <li><div><strong>Water security</strong>Desalination plants on US coastlines — power-intensive but transformative for water-scarce regions</div></li>
+      <li><div><strong>Transportation transformation</strong>Electrification, high speed rail, and public transit powered by abundant domestic energy</div></li>
+      <li><div><strong>Hydrogen as domestic fuel</strong>Generated from water — a clean homegrown energy source that ends petroleum dependence</div></li>
+      <li><div><strong>Manufacturing revival</strong>Not just chips — broad industrial reshoring made viable by abundant cheap power</div></li>
+      <li><div><strong>Defense readiness</strong>A grid that can survive conflict, cyberattack, and extreme weather — a true national security asset</div></li>
+    </ul>
+  </div>
+</section>
+
+<!-- MAP -->
+<section id="map" class="map-section">
+  <div class="section-label">The Map</div>
+  <h2 class="section-title">Where the grid is already failing</h2>
+  <p class="section-body">Grid reliability risk by NERC assessment region. Hover over any state for details. Source: NERC 2025 Long-Term Reliability Assessment (January 2026).</p>
+  <div id="map-container"></div>
+  <div class="map-legend">
+    <div class="map-legend-item"><div class="map-legend-dot" style="background:#C0392B"></div>High risk — projected resource shortfalls</div>
+    <div class="map-legend-item"><div class="map-legend-dot" style="background:#E67E22"></div>Elevated risk — shortfall risk under extreme conditions</div>
+    <div class="map-legend-item"><div class="map-legend-dot" style="background:#27AE60"></div>Normal risk — adequacy criteria met</div>
+  </div>
+  <div class="map-source">
+    Sources: <a href="https://www.nerc.com/globalassets/our-work/assessments/nerc_ltra_2025.pdf" target="_blank">NERC 2025 LTRA</a> ·
+    <a href="https://www.ferc.gov/sites/default/files/2025-05/Summer%20Assessment%202025%205-14-25.pdf" target="_blank">FERC Summer 2025 Assessment</a> ·
+    <a href="https://gridstrategiesllc.com/review-of-nercs-2025-ltra/" target="_blank">Grid Strategies Independent Review</a>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section id="problem" class="section problem-section">
+  <div class="problem-inner">
+    <div>
+      <div class="section-label">The Problem</div>
+      <blockquote class="problem-quote">"The nation that controls baseload power controls the data centers. The nation that controls the data centers shapes AI. The nation that shapes AI shapes the global order."</blockquote>
+    </div>
+    <ul class="problem-list">
+      <li>AI is consuming chips and gigawatts at a pace the grid was never designed to handle</li>
+      <li>Chip manufacturing must reshore from Taiwan — but domestic fabs require baseload power that doesn't exist at the needed scale</li>
+      <li>Defense modernization depends on chip supply security we cannot currently guarantee</li>
+      <li>Renewables have papered over the problem with effective GW rather than real dispatchable baseload</li>
+      <li>Nuclear and hydro — the obvious answers — remain hamstrung by regulation and outdated sentiment</li>
+      <li>The grid's components themselves come from geopolitical competitors — a vulnerability hiding in plain sight</li>
+      <li>Nobody is speaking with one voice across all of these domains. Until now.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- CTA / CONTACT -->
+<section id="contact" class="cta-section">
+  <div class="section-label" style="justify-content:center">Get Involved</div>
+  <h2 class="section-title">This problem is too important to solve in silos.</h2>
+  <p class="section-body">If you work in energy, chips, AI, defense, or policy — we want to hear from you. The table is being set.</p>
+  <div class="cta-buttons">
+    <a href="sovereign_grid_initiative_brief.docx" class="btn-primary" id="brief">Download the Brief</a>
+    <a href="mailto:contact@sovereigngridinitialive.org" class="btn-ghost">Start a Conversation</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-left">
+    <div class="footer-logo">The Sovereign Grid Initiative</div>
+    <div class="footer-sub">sovereigngridinitialive.org</div>
+  </div>
+  <div class="footer-note">Draft 2026 — For discussion purposes</div>
+</footer>
+
+<!-- MAP TOOLTIP -->
+<div class="map-tooltip" id="mapTooltip">
+  <div class="map-tt-name" id="ttName"></div>
+  <div class="map-tt-zone" id="ttZone"></div>
+  <div class="map-tt-risk" id="ttRisk"></div>
+  <div class="map-tt-detail" id="ttDetail"></div>
+</div>
+
+<!-- D3 + TopoJSON -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js"></script>
+<script>
+const riskData = {
+  "Alabama":      { risk:"high",     zone:"SERC-Central",   detail:"SERC-Central high risk. Aging infrastructure, summer peak demand vulnerability." },
+  "Arizona":      { risk:"elevated", zone:"WECC-SW",         detail:"WECC-Southwest elevated risk. Extreme heat events drive peak demand. Solar helps but evening gap remains." },
+  "Arkansas":     { risk:"high",     zone:"MISO-South",      detail:"MISO-South high risk. Generator retirements outpacing additions." },
+  "California":   { risk:"elevated", zone:"CAISO",           detail:"CAISO elevated risk. Wildfire exposure, evening demand gaps as solar ramps down, extreme heat." },
+  "Colorado":     { risk:"elevated", zone:"WECC-Basin",      detail:"WECC-Basin elevated risk 2026-2028, high risk from 2029. Load growth from data centers and population." },
+  "Connecticut":  { risk:"elevated", zone:"ISO-NE",          detail:"ISO-NE elevated risk. Limited fuel infrastructure, high gas dependence." },
+  "Delaware":     { risk:"high",     zone:"PJM",             detail:"PJM elevated/high risk. Part of the stressed mid-Atlantic zone." },
+  "Florida":      { risk:"normal",   zone:"FRCC",            detail:"FRCC normal risk. Well-resourced with adequate planned capacity." },
+  "Georgia":      { risk:"elevated", zone:"SERC-SE",         detail:"SERC-Southeast elevated risk. Rapid data center growth, summer peak demand." },
+  "Idaho":        { risk:"high",     zone:"WECC-NW",         detail:"WECC-Northwest high risk. Hydro-dependent with drought risk and rising demand." },
+  "Illinois":     { risk:"high",     zone:"MISO/PJM",        detail:"MISO/PJM overlap. Chicago metro data center corridor, thermal retirements." },
+  "Indiana":      { risk:"high",     zone:"MISO/PJM",        detail:"MISO/PJM overlap. Coal retirements not being replaced with dispatchable capacity." },
+  "Iowa":         { risk:"high",     zone:"MISO",            detail:"MISO high risk. Major data center presence driving demand surge." },
+  "Kansas":       { risk:"elevated", zone:"SPP",             detail:"SPP elevated risk. Wind-heavy but lacking dispatchable backup." },
+  "Kentucky":     { risk:"high",     zone:"PJM/SERC",        detail:"PJM/SERC overlap. Coal retirements not offset by equivalent new resources." },
+  "Louisiana":    { risk:"high",     zone:"MISO-South",      detail:"MISO-South high risk. Aging generation fleet, industrial load growth." },
+  "Maine":        { risk:"elevated", zone:"ISO-NE",          detail:"ISO-NE elevated risk. Isolated position, winter demand peaks, limited dispatchable capacity." },
+  "Maryland":     { risk:"high",     zone:"PJM",             detail:"PJM high risk. Major data center corridor, grid capacity issues." },
+  "Massachusetts":{ risk:"elevated", zone:"ISO-NE",          detail:"ISO-NE elevated risk. Pipeline capacity constraints, cold weather vulnerability." },
+  "Michigan":     { risk:"high",     zone:"MISO",            detail:"MISO high risk. Nuclear and coal retirements, rising industrial and data center load." },
+  "Minnesota":    { risk:"high",     zone:"MISO",            detail:"MISO high risk from 2028. 18 GW of data center loads projected by 2035." },
+  "Mississippi":  { risk:"high",     zone:"MISO-South/SERC", detail:"MISO-South/SERC-Central overlap. Aging infrastructure, summer peak vulnerability." },
+  "Missouri":     { risk:"high",     zone:"MISO/SPP",        detail:"MISO/SPP footprint. Thermal retirements and load growth creating adequacy concerns." },
+  "Montana":      { risk:"high",     zone:"WECC-NW",         detail:"WECC-Northwest high risk. Thermal retirements, limited new dispatchable resources." },
+  "Nebraska":     { risk:"elevated", zone:"SPP/MISO",        detail:"SPP/MISO border. Generator retirements and data center growth colliding." },
+  "Nevada":       { risk:"elevated", zone:"WECC-Basin",      detail:"WECC-Basin elevated risk 2026-2028, high from 2029. Rapid load growth from data centers." },
+  "New Hampshire":{ risk:"elevated", zone:"ISO-NE",          detail:"ISO-NE elevated risk. Gas supply constraints in winter, aging infrastructure." },
+  "New Jersey":   { risk:"high",     zone:"PJM",             detail:"PJM high risk. Dense load, limited new generation, data center growth." },
+  "New Mexico":   { risk:"elevated", zone:"WECC-SW/SPP",     detail:"WECC-SW/SPP border. Tight margins and transmission constraints." },
+  "New York":     { risk:"elevated", zone:"NYISO",           detail:"NYISO elevated risk. Planned peaker retirements, winter gas infrastructure limits." },
+  "North Carolina":{ risk:"elevated",zone:"SERC-East",       detail:"SERC-East elevated risk. Data center investment (Research Triangle), grid tightening." },
+  "North Dakota": { risk:"high",     zone:"MISO/MRO",        detail:"MISO footprint. Demand growing faster than new resources. High risk from 2028." },
+  "Ohio":         { risk:"high",     zone:"PJM",             detail:"PJM elevated/high risk. Demand growth and thermal retirements tightening reserves." },
+  "Oklahoma":     { risk:"elevated", zone:"SPP",             detail:"SPP elevated risk. Gas dependence creates winter vulnerability." },
+  "Oregon":       { risk:"high",     zone:"WECC-NW",         detail:"WECC-Northwest high risk. Generator retirements outpacing additions. Hydro-dependent." },
+  "Pennsylvania": { risk:"high",     zone:"PJM",             detail:"PJM high risk. Demand growth outpacing resource additions. Nuclear fleet aging." },
+  "Rhode Island": { risk:"elevated", zone:"ISO-NE",          detail:"ISO-NE elevated risk. Small grid, heavily import-dependent." },
+  "South Carolina":{ risk:"elevated",zone:"SERC-SE",         detail:"SERC-Southeast elevated risk. Growing load and transmission constraints." },
+  "South Dakota": { risk:"high",     zone:"MISO/MRO",        detail:"MISO footprint. Part of region facing projected shortfalls." },
+  "Tennessee":    { risk:"high",     zone:"SERC-Central",    detail:"SERC-Central high risk. Demand forecasts increasing faster than resource mix can supply." },
+  "Texas":        { risk:"elevated", zone:"ERCOT",           detail:"ERCOT elevated risk. Improved near-term picture due to DR reforms but structural risk persists. Isolated grid, extreme weather vulnerability." },
+  "Utah":         { risk:"elevated", zone:"WECC-Basin",      detail:"WECC-Basin elevated risk 2026-2028, high from 2029. Demand growth outpacing resource additions." },
+  "Vermont":      { risk:"elevated", zone:"ISO-NE",          detail:"ISO-NE elevated risk. Small hydro-dependent system, relies heavily on imports." },
+  "Virginia":     { risk:"high",     zone:"PJM",             detail:"PJM high risk. Northern Virginia = world's largest data center hub. Grid under severe strain." },
+  "Washington":   { risk:"high",     zone:"WECC-NW",         detail:"WECC-Northwest high risk. Hydro variability, thermal retirements, growing load." },
+  "West Virginia":{ risk:"high",     zone:"PJM",             detail:"PJM high risk. Coal retirements creating resource gaps, transmission constraints." },
+  "Wisconsin":    { risk:"high",     zone:"MISO",            detail:"MISO high risk. Resource additions not keeping pace with demand forecasts." },
+  "Wyoming":      { risk:"elevated", zone:"WECC-Basin/NW",   detail:"WECC-Basin/NW border. Coal retirements not being replaced with equivalent baseload." }
+};
+
+const colors = { high:"#C0392B", elevated:"#E67E22", normal:"#27AE60" };
+const riskLabels = { high:"High Risk", elevated:"Elevated Risk", normal:"Normal Risk" };
+const fipsToName = {
+  "01":"Alabama","04":"Arizona","05":"Arkansas","06":"California","08":"Colorado",
+  "09":"Connecticut","10":"Delaware","12":"Florida","13":"Georgia","16":"Idaho",
+  "17":"Illinois","18":"Indiana","19":"Iowa","20":"Kansas","21":"Kentucky",
+  "22":"Louisiana","23":"Maine","24":"Maryland","25":"Massachusetts","26":"Michigan",
+  "27":"Minnesota","28":"Mississippi","29":"Missouri","30":"Montana","31":"Nebraska",
+  "32":"Nevada","33":"New Hampshire","34":"New Jersey","35":"New Mexico","36":"New York",
+  "37":"North Carolina","38":"North Dakota","39":"Ohio","40":"Oklahoma","41":"Oregon",
+  "42":"Pennsylvania","44":"Rhode Island","45":"South Carolina","46":"South Dakota",
+  "47":"Tennessee","48":"Texas","49":"Utah","50":"Vermont","51":"Virginia",
+  "53":"Washington","54":"West Virginia","55":"Wisconsin","56":"Wyoming"
+};
+
+const tooltip = document.getElementById("mapTooltip");
+
+async function buildMap() {
+  const us = await d3.json("https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json");
+  const width = 960, height = 580;
+  const projection = d3.geoAlbersUsa().scale(1280).translate([width/2, height/2]);
+  const path = d3.geoPath().projection(projection);
+  const states = topojson.feature(us, us.objects.states);
+
+  const svg = d3.select("#map-container").append("svg").attr("viewBox", `0 0 ${width} ${height}`);
+
+  svg.selectAll("path")
+    .data(states.features.filter(d => {
+      const name = fipsToName[String(d.id).padStart(2,"0")];
+      return name && name !== "Alaska" && name !== "Hawaii";
+    }))
+    .enter().append("path")
+    .attr("class","state-path")
+    .attr("d", path)
+    .attr("fill", d => {
+      const name = fipsToName[String(d.id).padStart(2,"0")];
+      const info = riskData[name];
+      return info ? colors[info.risk] : "#333";
+    })
+    .on("mousemove", function(event, d) {
+      const name = fipsToName[String(d.id).padStart(2,"0")];
+      const info = riskData[name];
+      document.getElementById("ttName").textContent = name || "Unknown";
+      document.getElementById("ttZone").textContent = info ? "Grid region: " + info.zone : "";
+      const riskEl = document.getElementById("ttRisk");
+      riskEl.textContent = info ? riskLabels[info.risk] : "No data";
+      riskEl.style.color = info ? colors[info.risk] : "#888";
+      document.getElementById("ttDetail").textContent = info ? info.detail : "Not assessed.";
+      tooltip.style.display = "block";
+      tooltip.style.left = (event.clientX + 14) + "px";
+      tooltip.style.top = (event.clientY + 14) + "px";
+    })
+    .on("mouseleave", () => { tooltip.style.display = "none"; });
+}
+
+buildMap().catch(console.error);
+</script>
+
+</body>
+</html>
